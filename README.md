@@ -25,6 +25,27 @@ Helm install the mqtt broker.
 helm install mqtt eclipse-mosquitto/ -f ./eclipse-mosquitto/values-dev.yaml 
 ```
 
+## Deploy Caliper Workers node K8s pod 
+In local terminal with kubectl,
+
+```
+cd ~/git/
+git clone https://github.com/sweeho/caliper-ws.git
+cd ~/git/caliper-ws/
+```
+
+Update the mqtt broker address in ~/git/caliper-ws/caliper-worker/profiles/default/caliper.yaml
+
+Use Helm to install the Caliper worker to your kubernetes cluster.
+```
+cd ~/git/caliper-ws/
+k config use-context CONTEXT_NAME
+helm install caliper caliper-worker/
+```
+
+Check the Caliper workers logs to ensure it can connect to the mqtt broker.
+
+
 ## Hyperledger Caliper Master Installation on a Google Cloud VM
 
 Launch a GCP VM. SSH into the VM.
@@ -54,28 +75,7 @@ npm i && npm run repoclean -- --yes && npm run bootstrap
 ```
 
 
-## Deploy Caliper Workers node K8s pod 
-In local terminal with kubectl,
-
-```
-cd ~/git/
-git clone https://github.com/sweeho/caliper-ws.git
-cd ~/git/caliper-ws/
-```
-
-Update the mqtt broker address in ~/git/caliper-ws/caliper-worker/profiles/default/caliper.yaml
-
-Use Helm to install the Caliper worker to your kubernetes cluster.
-```
-cd ~/git/caliper-ws/
-k config use-context CONTEXT_NAME
-helm install caliper caliper-worker/
-```
-
-Check the Caliper workers logs to ensure it can connect to the mqtt broker.
-
-
-## Run Caliper Master
+## Run test in Caliper Master
 
 In local terminal
 ```
