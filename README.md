@@ -1,4 +1,4 @@
-### Steps to Deploy and Use Caliper with Custum Quorum SUT
+# Steps to Deploy and Use Caliper with Custum Quorum SUT
 
 Full documentation here: https://hyperledger.github.io/caliper/v0.3.2/getting-started/
 
