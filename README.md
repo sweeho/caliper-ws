@@ -74,13 +74,6 @@ cd ~/git/caliper-ws/
 npm i && npm run repoclean -- --yes && npm run bootstrap
 ```
 
-
-## Run test in Caliper Master
-
-In local terminal
-```
-cd ~/git/caliper-ws/
-```
 Update the mqtt broker address: 
 - ~/git/caliper-ws/profiles/default/caliper.yaml
 
