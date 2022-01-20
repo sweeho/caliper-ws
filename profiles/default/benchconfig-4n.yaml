@@ -18,20 +18,20 @@ test:
     number: 4
   rounds:
     - label: open1
-      txNumber: 200
+      txNumber: 2000
       #txDuration: 60
-      rateControl: { type: 'fixed-rate', opts: { tps: 50 } }
+      rateControl: { type: 'fixed-rate', opts: { tps: 200 } }
       arguments:
         money: 1000000
       callback: ./open.js
     - label: query1
-      txNumber: 200
+      txNumber: 2000
       rateControl: { type: 'fixed-rate', opts: { tps: 200 } }
       callback: ./query.js
     - label: transfer1
-      txNumber: 200
+      txNumber: 2000
       #txDuration: 60
-      rateControl: { type: 'fixed-rate', opts: { tps: 50 } }
+      rateControl: { type: 'fixed-rate', opts: { tps: 200 } }
       arguments:
         money: 1000
       callback: ./transfer.js
