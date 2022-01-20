@@ -81,12 +81,12 @@ Update the quorum node details:
 - ~/git/caliper-ws/profiles/default/networkconfig-1n.json
 - ~/git/caliper-ws/profiles/default/networkconfig-4n.json
 
-Send transaction through single calier worker connected to a single Quorum node websocket port 8546
+Send private transaction through single caliper worker connected to a single Quorum node websocket port 8546
 ```
 node ~/git/caliper-ws/packages/caliper-cli/caliper.js launch master --caliper-workspace ~/git/caliper-ws/profiles/default/ --caliper-benchconfig benchconfig-1n.yaml --caliper-networkconfig networkconfig-1n.json --caliper-flow-skip-end 
 ```
 
-Send transaction through 4 calier workers connected to 4 seperate Quorum nodes websocket port 8546
+Send private transaction through 4 caliper workers connected to 4 seperate Quorum nodes websocket port 8546
 ```
 node ~/git/caliper-ws/packages/caliper-cli/caliper.js launch master --caliper-workspace ~/git/caliper-ws/profiles/default/ --caliper-benchconfig benchconfig-4n.yaml --caliper-networkconfig networkconfig-4n.json --caliper-flow-skip-end 
 ```
