@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caliperconfig
+  namespace: caliper
+  labels:
+    app: caliper
+    name: caliperconfig
+data:
+  benchconfig.yaml: |-
+{{ .Files.Get "profiles/default/benchconfig.yaml" | indent 4}}
+
+  caliper.yaml: |-
+{{ .Files.Get "profiles/default/caliper.yaml" | indent 4}}
+
+  networkconfig.json: |-
+{{ .Files.Get "profiles/default/networkconfig.json" | indent 4}}
+
+  query.js: |-
+{{ .Files.Get "profiles/default/query.js" | indent 4}}
+
+  open.js: |-
+{{ .Files.Get "profiles/default/open.js" | indent 4}}
+
+  transfer.js: |-
+{{ .Files.Get "profiles/default/transfer.js" | indent 4}}
+

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: caliper
+  name: caliper
+  namespace: caliper
+spec:
+  selector:
+    matchLabels:
+      app: caliper
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: caliper
+    spec:
+      containers:
+        - env:
+            - name: CALIPER_BIND_SUT
+              value: quorum
+            - name: CALIPER_BENCHCONFIG
+              value: benchconfig.yaml
+            - name: CALIPER_NETWORKCONFIG
+              value: networkconfig.json
+            - name: CALIPER_MACHINECONFIG
+              value: caliper.yaml
+          #image: marcomazzoni/caliper-quorum:testing
+          image: sweeho/caliper-quorum-ws:20220114023738
+          name: caliper
+          command:
+            - caliper
+          args:
+            - launch
+            - worker
+          tty: true
+          volumeMounts:
+            - name: caliper-workspace 
+              mountPath: /hyperledger/caliper/workspace
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/benchconfig.yaml
+              subPath: benchconfig.yaml
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/networkconfig.json
+              subPath: networkconfig.json
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/caliper.yaml
+              subPath: caliper.yaml
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/open.js
+              subPath: open.js
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/transfer.js
+              subPath: transfer.js
+            - name: caliperconfig
+              mountPath: /hyperledger/caliper/workspace/query.js
+              subPath: query.js
+          workingDir: /hyperledger/caliper/workspace
+      restartPolicy: Always
+      volumes:
+        - name: caliper-workspace 
+          persistentVolumeClaim:
+            claimName: caliper-workspace-pvc
+        - name: caliperconfig
+          configMap:
+            name: caliperconfig
+            items:
+            - key: benchconfig.yaml
+              path: benchconfig.yaml
+            - key: networkconfig.json
+              path: networkconfig.json
+            - key: caliper.yaml
+              path: caliper.yaml
+            - key: open.js
+              path: open.js
+            - key: transfer.js
+              path: transfer.js
+            - key: query.js
+              path: query.js
+      restartPolicy: Always
+

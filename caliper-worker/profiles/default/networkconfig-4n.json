@@ -1,0 +1,52 @@
+{
+  "caliper": {
+    "blockchain": "quorum",
+    "command": {
+      "start": "",
+      "end": ""
+    }
+  },
+  "quorum": {
+    "nodes": [
+        {
+          "url": "ws://10.160.0.4:8546",
+          "fromAddress": "0xAd063FD4097949f564C58e86f3b72A1Bcd98F1BC",
+          "fromAddressPassword": "",
+          "privateFrom": "VnH45eEcPfGosZVxhh7SO9uq0Md/5CCeAJcGfVLb32Q="
+        },
+	      {
+          "url": "ws://10.140.0.21:8546",
+          "fromAddress": "0x6758E3Bd8db7Eeb28354518c951B5A32bAF8C535",
+          "fromAddressPassword": "",
+          "privateFrom": "1qo3ou9z7YcUwnKIA97k8j6rs9p9YdahNyCteQhkhTY="
+        },
+	      {
+          "url": "ws://10.170.0.22:8546",
+          "fromAddress": "0x3DB2E60b7eD84101c6918F89Ab96d2bEEAab9D9c",
+          "fromAddressPassword": "",
+          "privateFrom": "8EuXjdsT39ReEYWKroh/Wwx+vI8yZQCtB4ZxZBi4SUM="
+        },
+	      {
+          "url": "ws://10.146.0.4:8546",
+          "fromAddress": "0xdd7DFAf31239FAd48456B6B420Cf679707E9Ae02",
+          "fromAddressPassword": "",
+          "privateFrom": "Ehvn8mSclAcmwVxIAf2ECvXLnZzBGUAwCATWZR9oaGQ="
+        } 
+    ],
+    "contractDeployerAddress": "0xAd063FD4097949f564C58e86f3b72A1Bcd98F1BC",
+    "contractDeployerAddressPassword": "",
+    "transactionConfirmationBlocks": 5,
+    "contracts": {
+      "simple": {
+        "path": "./simple/simple.json",
+        "isPrivate": true,
+        "privateFor": [
+          "VnH45eEcPfGosZVxhh7SO9uq0Md/5CCeAJcGfVLb32Q=",
+          "1qo3ou9z7YcUwnKIA97k8j6rs9p9YdahNyCteQhkhTY=",
+          "8EuXjdsT39ReEYWKroh/Wwx+vI8yZQCtB4ZxZBi4SUM=",
+          "Ehvn8mSclAcmwVxIAf2ECvXLnZzBGUAwCATWZR9oaGQ="
+        ]
+      }
+    }
+  }
+}
