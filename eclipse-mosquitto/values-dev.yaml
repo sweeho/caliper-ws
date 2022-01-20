@@ -1,0 +1,170 @@
+# Default values for eclipse-mosquitto.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: eclipse-mosquitto
+  tag: 1.6.7
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+container:
+  ports:
+    mqtt:
+      name: mqtt
+      port: 1884
+    mqtts:
+      name: mqtts
+      port: 1883
+
+service:
+  type: ClusterIP
+  ports:
+    mqtt:
+      name: mqtt
+      port: 1884
+    mqtts:
+      name: mqtts
+      port: 1883
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config: |-
+  persistence true
+  persistence_location /mosquitto/data/
+  log_dest stdout
+  listener 1884
+  listener 1883
+  protocol mqtt
+  cafile /mosquitto/config/certs/ca.crt
+  certfile /mosquitto/config/certs/server.crt
+  keyfile /mosquitto/config/certs/server.key
+  require_certificate false
+  use_subject_as_username false
+  user root
+  allow_anonymous true
+
+certs:
+  ca:
+    crt: |-
+      -----BEGIN CERTIFICATE-----
+      MIIDWDCCAkACCQCk9nbAqY/gfjANBgkqhkiG9w0BAQsFADBuMQswCQYDVQQGEwJU
+      UjERMA8GA1UECAwISXN0YW5idWwxETAPBgNVBAcMCElzdGFuYnVsMRMwEQYDVQQK
+      DApjbG91ZG5lc2lsMQswCQYDVQQLDAJDQTEXMBUGA1UEAwwOY2xvdWRuZXNpbC5j
+      b20wHhcNMjExMTI3MTAzMjMxWhcNMjIxMTI3MTAzMjMxWjBuMQswCQYDVQQGEwJU
+      UjERMA8GA1UECAwISXN0YW5idWwxETAPBgNVBAcMCElzdGFuYnVsMRMwEQYDVQQK
+      DApjbG91ZG5lc2lsMQswCQYDVQQLDAJDQTEXMBUGA1UEAwwOY2xvdWRuZXNpbC5j
+      b20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDIpFoLvsMQd/b0Z4TA
+      Rqe1H/PXWeR9bl8cNGiZ1tS6y2SGUirZ0UjV/XYc8GiHRKTlaR1vWm75944QjvrY
+      Ju/q9cd/giewDKBMjcZ+bPVle85qoZWQDIEB3qThrGcMjD3Y4p9/uwQiJTiGJcFI
+      FNOnnMLU6TzpAZQoInDhnLZ2IG6YZH+wgmJdZa2KEZYCCfhFd8uYesGf5Xt0en1a
+      X13ut+TfCWwjyFyetE5KIUpGl00AIm9G/awl8I16rQDxpJcy2xf/ZK5kHU+7TX7C
+      ZFcBDq3lZiN/uD96ysWoncJYngOhpnkDkrR93cxLJLoFTOJIUzYhXtocds/ao+Lt
+      jHKNAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAFVYSM2o2UdI8zs/O8Wd2hVixnVq
+      Ap2l1g0uZu4CP7yDjFk4MAx4u47XGhEfoX9L6ghz5nT41w6R9v33OolutZqbJ2L0
+      jScsWVswZJVXHBrYCdEuVLAgDzWtlBDzfsDyejixdIhevSrXAsmpTPfjX7qyN2W8
+      /Bh7vxlUYosZdvwtL+TQSNDXXDmBFnJGqf+8QKyDDJH0RR19jh2X9fSpfxU/kxnS
+      +HtM83nL++4SAAV2Y0w7Ydi9ZRvrF8eGJl0sBBD7+zcOYm7YcIi9QS5NHuceW68a
+      WMpFX7oGM7rAnnaBaGcCggiptiWdh749vQ7S320VbxkPjZudJyKQNm7zG08=
+      -----END CERTIFICATE-----
+  server:
+    crt: |-
+      -----BEGIN CERTIFICATE-----
+      MIIDXDCCAkQCCQDnCJLhU+fMXTANBgkqhkiG9w0BAQsFADBuMQswCQYDVQQGEwJU
+      UjERMA8GA1UECAwISXN0YW5idWwxETAPBgNVBAcMCElzdGFuYnVsMRMwEQYDVQQK
+      DApjbG91ZG5lc2lsMQswCQYDVQQLDAJDQTEXMBUGA1UEAwwOY2xvdWRuZXNpbC5j
+      b20wHhcNMjExMTI3MTAzMjMxWhcNMjIxMTI3MTAzMjMxWjByMQswCQYDVQQGEwJU
+      UjERMA8GA1UECAwISXN0YW5idWwxETAPBgNVBAcMCElzdGFuYnVsMRMwEQYDVQQK
+      DApjbG91ZG5lc2lsMQ8wDQYDVQQLDAZTZXJ2ZXIxFzAVBgNVBAMMDmNsb3VkbmVz
+      aWwuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArFj4Xr/uC2tJ
+      YSOXxSzeXtWhJbucFpfKSr/2nRwM3o7+yKhH/a1X4wHrzRRj4RgjxT5pHUaOMbiv
+      3RRR+gW6dbV8Z9y4qDlt5SGR8EjFj+tKQiPxX4ZaQhcEJX4JuebN3bN2l8Pviac7
+      kW83M17yGlByroL1RCmWwyU4uyS2QJs62hjF27qSrzr4Xf/+y0VytTULe1hccoGn
+      xnE4pJb82qwHiF3dKZem+9bPqatirr/GYrR4mgLrmW8dwCUKZXx5FBrGZbMQnNjr
+      xlbbTunMelJ0PHXvYfJH/U3fkNuj3aCEe1ysHHqgk8NCkT+qmpx6DlBwTE3kgEjK
+      2FHgBLPQnQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQDImBzcICch8+g1fk5WdoH7
+      b41WqolFNOJDR+DoBL5tc/YC2o6LNvw9yjddljyPIIuXDliPGOSfu/blKrWzEyng
+      5pq2IqR0wu78qyd2rEAeZAbCpksrKwgEb5Ciov39R39zm3/ek6xtyyjmmPJVrmU9
+      cYBrjtho777y1Zx0b4f1IAdEd4NYQlKzQUZ0D5KMuBp28bkC6Csnm9XIgsBeDVFq
+      1CxbX8CUe33UqAC3FPr9YS6l0MKawMlqN1Df72UR4xShhs9dUTdXGPE7ALFBg3hU
+      ThCviHfrN4TyMldCLb7PxTZNWLuIeADow6lLdyDTnqwvy0dqGi7NWeAttbbRVxbr
+      -----END CERTIFICATE-----
+    key: |-
+      -----BEGIN PRIVATE KEY-----
+      MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCsWPhev+4La0lh
+      I5fFLN5e1aElu5wWl8pKv/adHAzejv7IqEf9rVfjAevNFGPhGCPFPmkdRo4xuK/d
+      FFH6Bbp1tXxn3LioOW3lIZHwSMWP60pCI/FfhlpCFwQlfgm55s3ds3aXw++JpzuR
+      bzczXvIaUHKugvVEKZbDJTi7JLZAmzraGMXbupKvOvhd//7LRXK1NQt7WFxygafG
+      cTiklvzarAeIXd0pl6b71s+pq2Kuv8ZitHiaAuuZbx3AJQplfHkUGsZlsxCc2OvG
+      VttO6cx6UnQ8de9h8kf9Td+Q26PdoIR7XKwceqCTw0KRP6qanHoOUHBMTeSASMrY
+      UeAEs9CdAgMBAAECggEAIbzE2d9eXNPiqGZMRmfTG+NbyUQhePa7vcg4IWclScfa
+      LjNq7EirhJ+SpjGQn7aXAfyGnRl7qlYJ7xAUQAoxBuvA75/wcdXUIl9g7xV/vv2D
+      KtFYZaeqMXfJ8wDqLH7226hO1cSgNmULLxwDRUYXxHjtCiZOlspBXfACW/gCyUCH
+      i0ZGcLuleiE12XaeqHi4bgwhziMkGF9cr/Eurf4SLm6eGjU6Mz+HheTdsftAXN/g
+      0XEdyhm+YXeI+q+mu0LNOrMcr6TSl9ZnYx3TyCqW8Gc7jUJ+pMFiMoFp6srSoI9/
+      x+G/4+02P/8xFpvVgiqdeOpixQOTUphlt4CknSIRLQKBgQDZObX3NFXSjLlboR/x
+      bzlbaX0lOTDqieDSe+wRAQb70d6fOTl7uFfd58DWpa4tVPsg0zotxY8FVISCbojq
+      SzxuSR3/351HFvO3t5kmNTs7RXETXPshkm15CD4wTPs98QDGhERGGPjamUhfuySG
+      z/1lQIH5el0qzgvCj3Gi0SABVwKBgQDLHIdAGMFG1Ybmk7gUj7j7ND2FCIaVsoWN
+      xF3fFG6JUMiHH3GOwA5XkTHRXlNTj0g2/A2S8TJrEGrEdg3/wfCIUYkmVOLq7yMP
+      B/O/PMt/4s2LU7IKbaPWzT1AwFwW6mgPtl8QHWLhO4YZVjy9yFgW3l8uvEM2NfIT
+      cP9yL5fBKwKBgG9nvJ4Sli1MhMesg+BjxYvPNyJ/CUpP+iCY84Ho//boNH9+bq+3
+      5EBnWiv7fq+7FKxKCF1vI6F9LhRisg9PFKgPEbanrVbHO6kuHPpOdJk6TPq8RgN6
+      wHBBPPuyj2u+DULClO1KY15hHJAUP3BwfSmPgtk620tXrwpSXNo+3GYzAoGBAJLk
+      Zfh4Lsfww2hcqwPL0adzZ46f1N3Mx4P44T7lwu9ySiRXHER2J6ky68mUo0TKWhrR
+      /WspHyKJM/4ztvoiI7gi58KeH6JzInLLeH/1EuPBfo/mDtw14QkHU+ZReAhmrK24
+      YlYAOrPT3a7TTIigrPyVBFeDdkRtjU58KXJGc0UTAoGARLHPKP6MztVTboo/PFxU
+      qNlF3aXNxm+vJgJGz/8FAhC+IV/CO9ISlDvAkwM+tldPAHXSnZzeK1tLZ9q/jfWY
+      agaeMhmkaSS/TeAwHNV0/DUtyZr6CEKbESJH8D+ly3u2LyfAHmnJ8O/NyFOaWmov
+      6nnXhObIuNKrMfIMr0dB89I=
+      -----END PRIVATE KEY-----
+
+
+## Persist data to a persistent volume
+persistence:
+  enabled: true
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 8Gi
+  annotations: {}
+  storageClass: standard
+
+## Security context
+securityContext:
+  enabled: false
+  runAsUser: 999
+  fsGroup: 999

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "eclipse-mosquitto.fullname" . }}
+  annotations:
+    # Required to assign internal IP address
+    cloud.google.com/load-balancer-type: "Internal"
+    
+    # Required to enable global access
+    networking.gke.io/internal-load-balancer-allow-global-access: "true"
+  labels:
+{{ include "eclipse-mosquitto.labels" . | indent 4 }}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.148.0.51
+  ports:
+    - port: {{ .Values.service.ports.mqtt.port }}
+      targetPort: {{ .Values.container.ports.mqtt.name }}
+      protocol: TCP
+      name: {{ .Values.service.ports.mqtt.name }}
+    - port: {{ .Values.service.ports.mqtts.port }}
+      targetPort: {{ .Values.container.ports.mqtts.name }}
+      protocol: TCP
+      name: {{ .Values.service.ports.mqtts.name }}
+  selector:
+    app.kubernetes.io/name: {{ include "eclipse-mosquitto.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
